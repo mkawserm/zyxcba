@@ -1769,7 +1769,7 @@ bool ZVariant::operator==(const ZVariant &rhs)
     case ZVariantType::Float32:
         return std::fabs(this->m_float32 - rhs.m_float32) < std::numeric_limits<zfloat32>::epsilon();
     case ZVariantType::Float64:
-        return std::fabs(this->m_float64 - rhs.m_float64) < std::numeric_limits<double>::epsilon();
+        return std::fabs(this->m_float64 - rhs.m_float64) < std::numeric_limits<zfloat64>::epsilon();
 
     case ZVariantType::String:
         return this->m_string == rhs.m_string;
