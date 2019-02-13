@@ -16,6 +16,7 @@ typedef std::vector<ZVariant> ZVariantList;
 typedef std::map<ZVariant,ZVariant> ZVariantMap;
 typedef std::map<std::uint64_t,ZVariant> ZIntegerVariantMap;
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// \brief The ZVariantType enum
 ///
@@ -23,6 +24,7 @@ typedef std::map<std::uint64_t,ZVariant> ZIntegerVariantMap;
 enum class ZVariantType
 {
     None,
+    Bool,
 
     Int8,
     Int16,
@@ -45,6 +47,7 @@ enum class ZVariantType
 };
 
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// \brief The ZVariant class
 ///
@@ -56,6 +59,7 @@ class ZVariant
 public:
     explicit ZVariant();
 
+    explicit ZVariant(const bool &param);
     explicit ZVariant(const std::int8_t &param);
     explicit ZVariant(const std::int16_t &param);
     explicit ZVariant(const std::int32_t &param);
@@ -70,19 +74,23 @@ public:
     explicit ZVariant(const zfloat64 &param);
 
     explicit ZVariant(const std::string &param);
+    explicit ZVariant(const std::string &&param);
 
     explicit ZVariant(const ZVariantList &param);
     explicit ZVariant(const ZVariantMap &param);
     explicit ZVariant(const ZIntegerVariantMap &param);
 
     explicit ZVariant(const ZVariant &other);
+    explicit ZVariant(const ZVariant &&other);
 
     virtual ~ZVariant();
 
     ZVariantType variantType() const;
     std::string variantTypeString() const;
 
+    bool isValid() const;
     bool isNone() const;
+    bool isBool() const;
 
     bool isInt8() const;
     bool isInt16() const;
@@ -110,6 +118,7 @@ public:
     std::uint64_t stringLength() const;
     std::uint64_t integerVariantMapLength() const;
 
+    bool getBool() const;
     std::int8_t getInt8() const;
     std::int16_t getInt16() const;
     std::int32_t getInt32() const;
@@ -132,7 +141,8 @@ public:
     const ZVariantMap &getMap() const;
     const ZIntegerVariantMap &getIntegerVariantMap() const;
 
-
+    void makeInvalid();
+    void setBool(const bool &param);
     void setInt8(const std::int8_t &param);
     void setInt16(const std::int16_t &param);
     void setInt32(const std::int32_t &param);
@@ -151,7 +161,7 @@ public:
     void setMap(const ZVariantMap &param);
     void setIntegerVariantMap(const ZIntegerVariantMap &param);
 
-
+    void setValue(const bool &param);
     void setValue(const std::int8_t &param);
     void setValue(const std::int16_t &param);
     void setValue(const std::int32_t &param);
@@ -166,28 +176,47 @@ public:
     void setValue(const zfloat64 &param);
 
     void setValue(const std::string &param);
+
     void setValue(const ZVariantList &param);
     void setValue(const ZVariantMap &param);
     void setValue(const ZIntegerVariantMap &param);
 
+    void reserveList(const std::uint64_t &length);
 
-    bool operator <(const ZVariant& rhs) const
-    {
-        if(this->isNumber())
-        {
-            return this->getNumber()<rhs.getNumber();
-        }
-        else
-        {
-            return this->getLength()<rhs.getLength();
-        }
-    }
+    bool addToList(const bool &value);
+    bool addToList(const std::int8_t &value);
+    bool addToList(const std::int16_t &value);
+    bool addToList(const std::int32_t &value);
+    bool addToList(const std::int64_t &value);
 
+    bool addToList(const std::uint8_t &value);
+    bool addToList(const std::uint16_t &value);
+    bool addToList(const std::uint32_t &value);
+    bool addToList(const std::uint64_t &value);
+
+    bool addToList(const zfloat32 &value);
+    bool addToList(const zfloat64 &value);
+    bool addToList(const std::string &value);
+
+    bool addToList(const ZVariant &value);
+
+
+    bool addToMap(const std::uint64_t &key, const ZVariant &value);
+    bool addToMap(const ZVariant &key, const ZVariant &value);
+
+
+    bool operator<(const ZVariant& rhs) const;
+
+    ZVariant &operator=(ZVariant &&rhs);
+
+    ZVariant &operator=(const ZVariant &rhs);
+    ZVariant &operator=(const ZVariant &&rhs);
 
 private:
     ZVariantType m_variantType;
 
     union{
+        bool m_bool;
         std::int8_t m_int8;
         std::int16_t m_int16;
         std::int32_t m_int32;
@@ -200,13 +229,12 @@ private:
 
         zfloat32 m_float32;
         zfloat64 m_float64;
-
-        std::string m_string;
-
-        ZVariantList m_list;
-        ZVariantMap m_map;
-        ZIntegerVariantMap m_integerVariantMap;
     };
+
+    std::string m_string;
+    ZVariantList m_list;
+    ZVariantMap m_map;
+    ZIntegerVariantMap m_integerVariantMap;
 
 };
 
