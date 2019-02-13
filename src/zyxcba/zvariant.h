@@ -246,24 +246,75 @@ public:
 
     void clearList();
 
-    bool addToMap(const std::uint64_t &key, const bool &value);
-    bool addToMap(const std::uint64_t &key, const std::int8_t &value);
-    bool addToMap(const std::uint64_t &key, const std::int16_t &value);
-    bool addToMap(const std::uint64_t &key, const std::int32_t &value);
-    bool addToMap(const std::uint64_t &key, const std::int64_t &value);
-    bool addToMap(const std::uint64_t &key, const std::uint8_t &value);
-    bool addToMap(const std::uint64_t &key, const std::uint16_t &value);
-    bool addToMap(const std::uint64_t &key, const std::uint32_t &value);
-    bool addToMap(const std::uint64_t &key, const std::uint64_t &value);
-    bool addToMap(const std::uint64_t &key, const zfloat32 &value);
-    bool addToMap(const std::uint64_t &key, const zfloat64 &value);
-    bool addToMap(const std::uint64_t &key, const std::string &value);
-    bool addToMap(const std::uint64_t &key, const char *value);
-    bool addToMap(const std::uint64_t &key, const ZVariant &value);
+    bool addToIntVarMap(const std::uint64_t &key, const bool &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::int8_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::int16_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::int32_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::int64_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::uint8_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::uint16_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::uint32_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::uint64_t &value);
+    bool addToIntVarMap(const std::uint64_t &key, const zfloat32 &value);
+    bool addToIntVarMap(const std::uint64_t &key, const zfloat64 &value);
+    bool addToIntVarMap(const std::uint64_t &key, const std::string &value);
+    bool addToIntVarMap(const std::uint64_t &key, const char *value);
+    bool addToIntVarMap(const std::uint64_t &key, const ZVariant &value);
 
-    bool addToMap(const ZVariant &key, const ZVariant &value);
+//    bool addToMap(const std::uint64_t &key, const bool &value);
+//    bool addToMap(const std::uint64_t &key, const std::int8_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::int16_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::int32_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::int64_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::uint8_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::uint16_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::uint32_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::uint64_t &value);
+//    bool addToMap(const std::uint64_t &key, const zfloat32 &value);
+//    bool addToMap(const std::uint64_t &key, const zfloat64 &value);
+//    bool addToMap(const std::uint64_t &key, const std::string &value);
+//    bool addToMap(const std::uint64_t &key, const char *value);
+//    bool addToMap(const std::uint64_t &key, const ZVariant &value);
+
+//    bool addToMap(const std::uint64_t &key, const bool &value);
+//    bool addToMap(const std::uint64_t &key, const std::int8_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::int16_t &value);
+//    bool addToMap(const std::uint64_t &key, const std::int32_t &value);
+//    bool addToMap(const char *key, const std::int64_t &value);
+//    bool addToMap(const char *key, const std::uint8_t &value);
+//    bool addToMap(const char *key, const std::uint16_t &value);
+//    bool addToMap(const char *key, const std::uint32_t &value);
+//    bool addToMap(const char *key, const std::uint64_t &value);
+//    bool addToMap(const char *key, const zfloat32 &value);
+//    bool addToMap(const char *key, const zfloat64 &value);
+//    bool addToMap(const char *key, const std::string &value);
+//    bool addToMap(const char *key, const char *value);
+//    bool addToMap(const char *key, const ZVariant &value);
+//    bool addToMap(const ZVariant &key, const ZVariant &value);
+
+
+    template<typename T1,typename T2>
+    bool addToMap(const T1 &key, const T2 &value)
+    {
+        if(this->m_variantType == ZVariantType::None)
+        {
+            this->m_variantType = ZVariantType::Map;
+        }
+
+        if(this->m_variantType == ZVariantType::Map)
+        {
+            this->m_map.emplace(key,value);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     void clearMap();
+    void clearIntVarMap();
     void clearIntegerVariantMap();
 
 
