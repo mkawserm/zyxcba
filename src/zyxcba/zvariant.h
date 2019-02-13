@@ -199,8 +199,14 @@ public:
     void setFloat64(const zfloat64 &param);
 
     void setString(const std::string &param);
+
+    void setList();
     void setList(const ZVariantList &param);
+
+    void setMap();
     void setMap(const ZVariantMap &param);
+
+    void setIntVarMap();
     void setIntVarMap(const ZIntegerVariantMap &param);
     void setIntegerVariantMap(const ZIntegerVariantMap &param);
 
@@ -311,6 +317,7 @@ public:
     }
 
 
+    void clear();
     void clearList();
     void clearMap();
     void clearIntVarMap();

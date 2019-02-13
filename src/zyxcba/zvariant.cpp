@@ -779,66 +779,77 @@ void ZVariant::makeInvalid()
 
 void ZVariant::setBool(const bool &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::Bool;
     this->m_bool = param;
 }
 
 void ZVariant::setInt8(const std::int8_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::Int8;
     this->m_int8 = param;
 }
 
 void ZVariant::setInt16(const std::int16_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::Int16;
     this->m_int16 = param;
 }
 
 void ZVariant::setInt32(const std::int32_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::Int32;
     this->m_int32 = param;
 }
 
 void ZVariant::setInt64(const std::int64_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::Int64;
     this->m_int64 = param;
 }
 
 void ZVariant::setUInt8(const std::uint8_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::UInt8;
     this->m_uint8 = param;
 }
 
 void ZVariant::setUInt16(const std::uint16_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::UInt16;
     this->m_uint16 = param;
 }
 
 void ZVariant::setUInt32(const std::uint32_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::UInt32;
     this->m_uint32 = param;
 }
 
 void ZVariant::setUInt64(const std::uint64_t &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::UInt64;
     this->m_uint64 = param;
 }
 
 void ZVariant::setFloat32(const zfloat32 &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::Float32;
     this->m_float32 = param;
 }
 
 void ZVariant::setFloat64(const zfloat64 &param)
 {
+    this->clear();
     this->m_variantType = ZVariantType::Float64;
     this->m_float64 = param;
 }
@@ -847,26 +858,53 @@ void ZVariant::setString(const std::string &param)
 {
     this->m_variantType = ZVariantType::String;
     this->m_string = param;
+    this->m_int8 = 0;
+}
+
+void ZVariant::setList()
+{
+    this->m_variantType = ZVariantType::List;
+    this->m_list.clear();
+    this->m_int8 = 0;
 }
 
 void ZVariant::setList(const ZVariantList &param)
 {
     this->m_variantType = ZVariantType::List;
     this->m_list.clear();
+    this->m_int8 = 0;
+
     std::copy(param.begin(), param.end(), back_inserter(this->m_list));
+}
+
+void ZVariant::setMap()
+{
+    this->m_variantType = ZVariantType::Map;
+    this->m_map.clear();
+    this->m_int8 = 0;
 }
 
 void ZVariant::setMap(const ZVariantMap &param)
 {
     this->m_variantType = ZVariantType::Map;
     this->m_map.clear();
+    this->m_int8 = 0;
+
     this->m_map.insert(param.begin(),param.end());
+}
+
+void ZVariant::setIntVarMap()
+{
+    this->m_variantType = ZVariantType::IntegerVariantMap;
+    this->m_integerVariantMap.clear();
+    this->m_int8 = 0;
 }
 
 void ZVariant::setIntVarMap(const ZIntegerVariantMap &param)
 {
     this->m_variantType = ZVariantType::IntegerVariantMap;
     this->m_integerVariantMap.clear();
+    this->m_int8 = 0;
     this->m_integerVariantMap.insert(param.begin(),param.end());
 }
 
@@ -874,6 +912,8 @@ void ZVariant::setIntegerVariantMap(const ZIntegerVariantMap &param)
 {
     this->m_variantType = ZVariantType::IntegerVariantMap;
     this->m_integerVariantMap.clear();
+    this->m_int8 = 0;
+
     this->m_integerVariantMap.insert(param.begin(),param.end());
 }
 
@@ -1477,6 +1517,26 @@ bool ZVariant::addToIntVarMap(const std::uint64_t &key, const ZVariant &value)
     else
     {
         return false;
+    }
+}
+
+void ZVariant::clear()
+{
+    if(this->m_variantType == ZVariantType::String)
+    {
+        this->m_string.clear();
+    }
+    else if(this->m_variantType == ZVariantType::List)
+    {
+        this->m_list.clear();
+    }
+    else if(this->m_variantType == ZVariantType::Map)
+    {
+        this->m_map.clear();
+    }
+    else if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.clear();
     }
 }
 
