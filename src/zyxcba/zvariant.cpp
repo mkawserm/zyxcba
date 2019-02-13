@@ -1,3 +1,35 @@
+/* Copyright (c) 2019, Md Kawser Munshi
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *   Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ *
+ *   Redistributions in binary form must reproduce the above
+ *   copyright notice, this list of conditions and the following disclaimer
+ *   in the documentation and/or other materials provided with the
+ *   distribution.
+ *
+ *   Neither the names of the copyright owners nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
 #include "zvariant.h"
 
 namespace zyxcba {
@@ -902,6 +934,11 @@ bool ZVariant::addToList(const ZVariant &value)
     }
 }
 
+void ZVariant::clearList()
+{
+    this->m_list.clear();
+}
+
 bool ZVariant::addToMap(const std::uint64_t &key, const bool &value)
 {
     if(this->m_variantType == ZVariantType::None)
@@ -1370,6 +1407,16 @@ bool ZVariant::addToMap(const ZVariant &key, const ZVariant &value)
     }
 }
 
+void ZVariant::clearMap()
+{
+    this->m_map.clear();
+}
+
+void ZVariant::clearIntegerVariantMap()
+{
+    this->m_integerVariantMap.clear();
+}
+
 bool ZVariant::operator<(const ZVariant &rhs) const
 {
     if(this->isNumber())
@@ -1384,7 +1431,10 @@ bool ZVariant::operator<(const ZVariant &rhs) const
 
 ZVariant &ZVariant::operator=(ZVariant &&rhs)
 {
-    std::cout<<"Assignment Moving ZVariant = ..."<<std::endl;
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"Assignment Moving ZVariant..."<<std::endl;
+#endif
+
     if(this != &rhs)
     {
         this->makeInvalid();
@@ -1439,16 +1489,12 @@ ZVariant &ZVariant::operator=(ZVariant &&rhs)
             break;
 
         case ZVariantType::List:
-            //this->m_list.clear();
-            //this->m_list.reserve(other.m_list.size());
             this->m_list = std::move(rhs.m_list);
             break;
         case ZVariantType::Map:
-            //this->m_map.clear();
             this->m_map = std::move(rhs.m_map);
             break;
         case ZVariantType::IntegerVariantMap:
-            //this->m_integerVariantMap.clear();
             this->m_integerVariantMap = std::move(rhs.m_integerVariantMap);
             break;
         default:
@@ -1464,7 +1510,7 @@ ZVariant &ZVariant::operator=(ZVariant &&rhs)
 ZVariant &ZVariant::operator=(const ZVariant &rhs)
 {
 #ifdef ZYXCBA_DEBUG
-    std::cout<<"Assignment Copying = ..."<<std::endl;
+    std::cout<<"Assignment Copying ..."<<std::endl;
 #endif
 
     this->m_variantType = rhs.m_variantType;
@@ -1538,7 +1584,7 @@ ZVariant &ZVariant::operator=(const ZVariant &rhs)
 ZVariant &ZVariant::operator=(const ZVariant &&rhs)
 {
 #ifdef ZYXCBA_DEBUG
-    std::cout<<"Assignment Moving const ZVariant = ..."<<std::endl;
+    std::cout<<"Assignment Moving const ZVariant ..."<<std::endl;
 #endif
 
     if(this != &rhs)
@@ -1593,20 +1639,13 @@ ZVariant &ZVariant::operator=(const ZVariant &&rhs)
             break;
 
         case ZVariantType::List:
-            //this->m_list.clear();
-            //this->m_list.reserve(other.m_list.size());
             this->m_list = std::move(rhs.m_list);
-            //std::copy(other.m_list.begin(), other.m_list.end(), back_inserter(this->m_list));
             break;
         case ZVariantType::Map:
-            //this->m_map.clear();
             this->m_map = std::move(rhs.m_map);
-            //this->m_map.insert(other.m_map.begin(),other.m_map.end());
             break;
         case ZVariantType::IntegerVariantMap:
-            //this->m_integerVariantMap.clear();
             this->m_integerVariantMap = std::move(rhs.m_integerVariantMap);
-            //this->m_integerVariantMap.insert(other.m_integerVariantMap.begin(),other.m_integerVariantMap.end());
             break;
         default:
             m_variantType = ZVariantType::None;
