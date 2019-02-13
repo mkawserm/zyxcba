@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstring>
 #include <cstdint>
+#include <ostream>
 #include <iostream>
 
 #include "ztype.h"
@@ -202,19 +203,68 @@ public:
 
     bool addToList(const ZVariant &value);
 
-
+    bool addToMap(const std::uint64_t &key, const bool &value);
+    bool addToMap(const std::uint64_t &key, const std::int8_t &value);
+    bool addToMap(const std::uint64_t &key, const std::int16_t &value);
+    bool addToMap(const std::uint64_t &key, const std::int32_t &value);
+    bool addToMap(const std::uint64_t &key, const std::int64_t &value);
+    bool addToMap(const std::uint64_t &key, const std::uint8_t &value);
+    bool addToMap(const std::uint64_t &key, const std::uint16_t &value);
+    bool addToMap(const std::uint64_t &key, const std::uint32_t &value);
+    bool addToMap(const std::uint64_t &key, const std::uint64_t &value);
+    bool addToMap(const std::uint64_t &key, const zfloat32 &value);
+    bool addToMap(const std::uint64_t &key, const zfloat64 &value);
+    bool addToMap(const std::uint64_t &key, const std::string &value);
     bool addToMap(const std::uint64_t &key, const ZVariant &value);
-    bool addToMap(const ZVariant &key, const ZVariant &value);
 
+    bool addToMap(const ZVariant &key, const ZVariant &value);
 
 
     bool operator<(const ZVariant& rhs) const;
 
-
     ZVariant &operator=(const ZVariant &rhs);
-
     ZVariant &operator=(ZVariant &&rhs);
     ZVariant &operator=(const ZVariant &&rhs);
+
+    friend std::ostream &operator<<(std::ostream &os, const ZVariant &other)
+    {
+
+        switch (other.variantType())
+        {
+        case ZVariantType::Bool:
+            if(other.getBool())
+            {
+                os << "ZVariant("<<other.variantTypeString()<<": True"<<")";
+            }
+            else
+            {
+                os << "ZVariant("<<other.variantTypeString()<<": False"<<")";
+            }
+            break;
+        case ZVariantType::Int32:
+            os << "ZVariant("<<other.variantTypeString()<<": "<<other.getInt32()<<")";
+            break;
+
+        case ZVariantType::Map:
+            os << "ZVariant("<<other.variantTypeString()<<": "<<other.getLength()<<")";
+            break;
+        case ZVariantType::IntegerVariantMap:
+            os << "ZVariant("<<other.variantTypeString()<<": "<<other.getLength()<<")";
+            break;
+        case ZVariantType::List:
+            os << "ZVariant("<<other.variantTypeString()<<": "<<other.getLength()<<")";
+            break;
+        case ZVariantType::String:
+            os << "ZVariant("<<other.variantTypeString()<<": "<<other.getString()<<")";
+            break;
+
+        default:
+            os << "ZVariant("<<other.variantTypeString()<<")";
+            break;
+        }
+
+        return os;
+    }
 
 private:
     ZVariantType m_variantType;
@@ -241,6 +291,7 @@ private:
     ZIntegerVariantMap m_integerVariantMap;
 
 };
+
 
 }
 

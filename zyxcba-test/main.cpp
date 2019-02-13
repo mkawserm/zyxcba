@@ -6,15 +6,13 @@
 
 int main()
 {
-    zyxcba::ZVariant v;
-    v.addToMap(1,zyxcba::ZVariant(100));
-    v.addToMap(2,zyxcba::ZVariant(1001));
-    v.addToMap(3,zyxcba::ZVariant(1001));
+    zyxcba::ZVariant v(true);
 
 //    zyxcba::ZVariant v1;
 //    v1.addToMap(1,v);
 
     std::cout<<"V2"<<std::endl;
+    std::cout<<v<<std::endl;
     //zyxcba::ZVariant v2 = v1;
 
 //    v2 = std::move(v1);

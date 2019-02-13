@@ -902,6 +902,222 @@ bool ZVariant::addToList(const ZVariant &value)
     }
 }
 
+bool ZVariant::addToMap(const std::uint64_t &key, const bool &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::int8_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::int16_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::int32_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::int64_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::uint8_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::uint16_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::uint32_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::uint64_t &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const zfloat32 &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const zfloat64 &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToMap(const std::uint64_t &key, const std::string &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool ZVariant::addToList(const bool &value)
 {
     if(this->m_variantType == ZVariantType::None)
