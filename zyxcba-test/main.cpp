@@ -6,9 +6,9 @@
 
 int main()
 {
-    zyxcba::ZVariant v{"1"},v1{"12"};
-    std::cout<< (v!=v1);
-//    v.addToMap(1,"Smile");
+    zyxcba::ZVariant v;
+    v.addToMap(1,"Smile");
+    v.addToMap(2,"Smile");
 
 ////    zyxcba::ZVariant v1;
 ////    v1.addToMap(1,v);
