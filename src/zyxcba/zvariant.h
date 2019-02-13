@@ -81,6 +81,8 @@ public:
     explicit ZVariant(const ZIntegerVariantMap &param);
 
     explicit ZVariant(const ZVariant &other);
+
+    explicit ZVariant(ZVariant &&rhs);
     explicit ZVariant(const ZVariant &&other);
 
     virtual ~ZVariant();
@@ -205,11 +207,13 @@ public:
     bool addToMap(const ZVariant &key, const ZVariant &value);
 
 
+
     bool operator<(const ZVariant& rhs) const;
 
-    ZVariant &operator=(ZVariant &&rhs);
 
     ZVariant &operator=(const ZVariant &rhs);
+
+    ZVariant &operator=(ZVariant &&rhs);
     ZVariant &operator=(const ZVariant &&rhs);
 
 private:

@@ -3,19 +3,24 @@
 #include <ZType>
 #include <ZVariant>
 
-#include <QDebug>
 
 int main()
 {
-    zyxcba::ZVariant v1;
-    v1.addToList(10);
-    v1.addToList(20);
-    zyxcba::ZVariant v2;
+    zyxcba::ZVariant v;
+    v.addToMap(1,zyxcba::ZVariant(100));
+    v.addToMap(2,zyxcba::ZVariant(1001));
+    v.addToMap(3,zyxcba::ZVariant(1001));
 
-    v2 = std::move(v1);
-    std::cout<<v2.isValid()<<std::endl;
-    std::cout<<"v1 isValid:"<<v1.isValid()<<std::endl;
-    std::cout<<"v2 string:"<<v2.getLength()<<std::endl;
+//    zyxcba::ZVariant v1;
+//    v1.addToMap(1,v);
+
+    std::cout<<"V2"<<std::endl;
+    //zyxcba::ZVariant v2 = v1;
+
+//    v2 = std::move(v1);
+//    std::cout<<v2.isValid()<<std::endl;
+//    std::cout<<"v1 isValid:"<<v1.isValid()<<std::endl;
+//    std::cout<<"v2 string:"<<v2.getLength()<<std::endl;
 
     //std::string k("S1");
     //zyxcba::ZVariant v1(k);

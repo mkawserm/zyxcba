@@ -120,7 +120,9 @@ ZVariant::ZVariant(const ZIntegerVariantMap &param):
 ZVariant::ZVariant(const ZVariant &other):
     m_variantType(other.m_variantType)
 {
-    std::cout<<"Constructor Copying..."<<std::endl;
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"Constructor Copying... "<<this->variantTypeString()<<std::endl;
+#endif
 
     switch (m_variantType) {
     case ZVariantType::Bool:
@@ -192,83 +194,174 @@ ZVariant::ZVariant(const ZVariant &other):
 ZVariant::ZVariant(const ZVariant &&other):
     m_variantType(other.m_variantType)
 {
-    std::cout<<"Constructor Moving ZVariant..."<<std::endl;
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"Constructor Moving const ZVariant..."<<std::endl;
+#endif
 
-    switch (m_variantType) {
-    case ZVariantType::Bool:
-        this->m_bool = std::move(other.m_bool);
-        break;
-    case ZVariantType::Int8:
-        this->m_int8 = std::move(other.m_int8);
-        break;
+    if(this != &other)
+    {
+        switch (m_variantType) {
+        case ZVariantType::Bool:
+            this->m_bool = std::move(other.m_bool);
+            break;
+        case ZVariantType::Int8:
+            this->m_int8 = std::move(other.m_int8);
+            break;
 
-    case ZVariantType::Int16:
-        this->m_int16 = std::move(other.m_int16);
-        break;
+        case ZVariantType::Int16:
+            this->m_int16 = std::move(other.m_int16);
+            break;
 
-    case ZVariantType::Int32:
-        this->m_int32 = std::move(other.m_int32);
-        break;
+        case ZVariantType::Int32:
+            this->m_int32 = std::move(other.m_int32);
+            break;
 
-    case ZVariantType::Int64:
-        this->m_int64 = std::move(other.m_int64);
-        break;
+        case ZVariantType::Int64:
+            this->m_int64 = std::move(other.m_int64);
+            break;
 
-    case ZVariantType::UInt8:
-        this->m_uint8 = std::move(other.m_uint8);
-        break;
+        case ZVariantType::UInt8:
+            this->m_uint8 = std::move(other.m_uint8);
+            break;
 
-    case ZVariantType::UInt16:
-        this->m_uint16 = std::move(other.m_uint16);
-        break;
+        case ZVariantType::UInt16:
+            this->m_uint16 = std::move(other.m_uint16);
+            break;
 
-    case ZVariantType::UInt32:
-        this->m_uint32 = std::move(other.m_uint32);
-        break;
+        case ZVariantType::UInt32:
+            this->m_uint32 = std::move(other.m_uint32);
+            break;
 
-    case ZVariantType::UInt64:
-        this->m_uint64 = std::move(other.m_uint64);
-        break;
+        case ZVariantType::UInt64:
+            this->m_uint64 = std::move(other.m_uint64);
+            break;
 
-    case ZVariantType::Float32:
-        this->m_float32 = std::move(other.m_float32);
-        break;
+        case ZVariantType::Float32:
+            this->m_float32 = std::move(other.m_float32);
+            break;
 
-    case ZVariantType::Float64:
-        this->m_float64 = std::move(other.m_float64);
-        break;
+        case ZVariantType::Float64:
+            this->m_float64 = std::move(other.m_float64);
+            break;
 
-    case ZVariantType::String:
-        this->m_string = std::move(other.m_string);
-        break;
+        case ZVariantType::String:
+            this->m_string = std::move(other.m_string);
+            break;
 
-    case ZVariantType::List:
-        //this->m_list.clear();
-        //this->m_list.reserve(other.m_list.size());
-        this->m_list = std::move(other.m_list);
-        //std::copy(other.m_list.begin(), other.m_list.end(), back_inserter(this->m_list));
-        break;
-    case ZVariantType::Map:
-        //this->m_map.clear();
-        this->m_map = std::move(other.m_map);
-        //this->m_map.insert(other.m_map.begin(),other.m_map.end());
-        break;
-    case ZVariantType::IntegerVariantMap:
-        //this->m_integerVariantMap.clear();
-        this->m_integerVariantMap = std::move(other.m_integerVariantMap);
-        //this->m_integerVariantMap.insert(other.m_integerVariantMap.begin(),other.m_integerVariantMap.end());
-        break;
-    default:
-        m_variantType = ZVariantType::None;
-        break;
+        case ZVariantType::List:
+            //this->m_list.clear();
+            //this->m_list.reserve(other.m_list.size());
+            this->m_list = std::move(other.m_list);
+            //std::copy(other.m_list.begin(), other.m_list.end(), back_inserter(this->m_list));
+            break;
+        case ZVariantType::Map:
+            //this->m_map.clear();
+            this->m_map = std::move(other.m_map);
+            //this->m_map.insert(other.m_map.begin(),other.m_map.end());
+            break;
+        case ZVariantType::IntegerVariantMap:
+            //this->m_integerVariantMap.clear();
+            this->m_integerVariantMap = std::move(other.m_integerVariantMap);
+            //this->m_integerVariantMap.insert(other.m_integerVariantMap.begin(),other.m_integerVariantMap.end());
+            break;
+        default:
+            m_variantType = ZVariantType::None;
+            break;
+        }
     }
 
     //other.makeInvalid();
 }
 
+ZVariant::ZVariant(ZVariant &&rhs)
+{
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"Constructor Moving ZVariant ..."<<std::endl;
+#endif
+
+    if(this != &rhs)
+    {
+        this->makeInvalid();
+        this->m_variantType = rhs.m_variantType;
+
+        switch (rhs.m_variantType) {
+        case ZVariantType::Bool:
+            this->m_bool = std::move(rhs.m_bool);
+            break;
+        case ZVariantType::Int8:
+            this->m_int8 = std::move(rhs.m_int8);
+            break;
+
+        case ZVariantType::Int16:
+            this->m_int16 = std::move(rhs.m_int16);
+            break;
+
+        case ZVariantType::Int32:
+            this->m_int32 = std::move(rhs.m_int32);
+            break;
+
+        case ZVariantType::Int64:
+            this->m_int64 = std::move(rhs.m_int64);
+            break;
+
+        case ZVariantType::UInt8:
+            this->m_uint8 = std::move(rhs.m_uint8);
+            break;
+
+        case ZVariantType::UInt16:
+            this->m_uint16 = std::move(rhs.m_uint16);
+            break;
+
+        case ZVariantType::UInt32:
+            this->m_uint32 = std::move(rhs.m_uint32);
+            break;
+
+        case ZVariantType::UInt64:
+            this->m_uint64 = std::move(rhs.m_uint64);
+            break;
+
+        case ZVariantType::Float32:
+            this->m_float32 = std::move(rhs.m_float32);
+            break;
+
+        case ZVariantType::Float64:
+            this->m_float64 = std::move(rhs.m_float64);
+            break;
+
+        case ZVariantType::String:
+            this->m_string = std::move(rhs.m_string);
+            break;
+
+        case ZVariantType::List:
+            //this->m_list.clear();
+            //this->m_list.reserve(other.m_list.size());
+            this->m_list = std::move(rhs.m_list);
+            break;
+        case ZVariantType::Map:
+            //this->m_map.clear();
+            this->m_map = std::move(rhs.m_map);
+            break;
+        case ZVariantType::IntegerVariantMap:
+            //this->m_integerVariantMap.clear();
+            this->m_integerVariantMap = std::move(rhs.m_integerVariantMap);
+            break;
+        default:
+            m_variantType = ZVariantType::None;
+            break;
+        }
+
+        rhs.makeInvalid();
+    }
+}
+
 
 ZVariant::~ZVariant()
 {
+
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"ZVariant::~ZVariant()"<<std::endl;
+#endif
+
     if(this->m_variantType == ZVariantType::Map)
     {
         this->m_map.clear();
@@ -1225,7 +1318,10 @@ ZVariant &ZVariant::operator=(const ZVariant &rhs)
 
 ZVariant &ZVariant::operator=(const ZVariant &&rhs)
 {
+#ifdef ZYXCBA_DEBUG
     std::cout<<"Assignment Moving const ZVariant = ..."<<std::endl;
+#endif
+
     if(this != &rhs)
     {
         m_variantType = rhs.m_variantType;
