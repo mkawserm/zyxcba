@@ -6,8 +6,8 @@
 
 int main()
 {
-    zint8 c = 36;
-    std::cout<< c<<"\n";
-    std::cout << "Hello World!" << std::endl;
+    zyxcba::ZVariant v(100);
+
+    std::cout<<v.getNumber() << " Hello World!" << std::endl;
     return 0;
 }
