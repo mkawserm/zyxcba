@@ -769,6 +769,10 @@ void ZVariant::makeInvalid()
     {
         this->m_integerVariantMap.clear();
     }
+    else
+    {
+        this->m_int8 = 0;
+    }
 
     this->m_variantType = ZVariantType::None;
 }
@@ -1728,6 +1732,57 @@ ZVariant &ZVariant::operator=(const ZVariant &&rhs)
     }
 
     return *this;
+}
+
+bool ZVariant::operator==(const ZVariant &rhs)
+{
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"ZVariant::operator=="<<std::endl;
+#endif
+
+    if(this->m_variantType != rhs.m_variantType) return false;
+
+    switch (m_variantType)
+    {
+    case ZVariantType::None:
+        return true;
+    case ZVariantType::Bool:
+        return this->m_bool == rhs.m_bool;
+    case ZVariantType::Int8:
+        return this->m_int8 == rhs.m_int8;
+    case ZVariantType::Int16:
+        return this->m_int16 == rhs.m_int16;
+    case ZVariantType::Int32:
+        return this->m_int32 == rhs.m_int32;
+    case ZVariantType::Int64:
+        return this->m_int64 == rhs.m_int64;
+
+    case ZVariantType::UInt8:
+        return this->m_uint8 == rhs.m_uint8;
+    case ZVariantType::UInt16:
+        return this->m_uint16 == rhs.m_uint16;
+    case ZVariantType::UInt32:
+        return this->m_uint32 == rhs.m_uint32;
+    case ZVariantType::UInt64:
+        return this->m_uint64 == rhs.m_uint64;
+
+    case ZVariantType::Float32:
+        return std::fabs(this->m_float32 - rhs.m_float32) < std::numeric_limits<zfloat32>::epsilon();
+    case ZVariantType::Float64:
+        return std::fabs(this->m_float64 - rhs.m_float64) < std::numeric_limits<double>::epsilon();
+
+    case ZVariantType::String:
+        return this->m_string == rhs.m_string;
+    default:
+        break;
+    }
+
+    return false;
+}
+
+bool ZVariant::operator!=(const ZVariant &rhs)
+{
+    return !operator==(rhs);
 }
 
 }

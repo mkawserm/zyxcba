@@ -33,7 +33,9 @@
 #define ZVARIANT_H
 
 #include <map>
+#include <cmath>
 #include <vector>
+#include <limits>
 #include <cstring>
 #include <cstdint>
 #include <ostream>
@@ -270,6 +272,8 @@ public:
     ZVariant &operator=(const ZVariant &rhs);
     ZVariant &operator=(ZVariant &&rhs);
     ZVariant &operator=(const ZVariant &&rhs);
+    bool operator==(const ZVariant &rhs);
+    bool operator!=(const ZVariant &rhs);
 
     friend std::ostream &operator<<(std::ostream &os, const ZVariant &other)
     {
