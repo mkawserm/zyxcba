@@ -1511,7 +1511,6 @@ bool ZVariant::addToIntVarMap(const std::uint64_t &key, const ZVariant &value)
     if(this->m_variantType == ZVariantType::IntegerVariantMap)
     {
         this->m_integerVariantMap.emplace(key,value);
-        //this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
         return true;
     }
     else
