@@ -244,8 +244,6 @@ public:
 
     bool addToList(const ZVariant &value);
 
-    void clearList();
-
     bool addToIntVarMap(const std::uint64_t &key, const bool &value);
     bool addToIntVarMap(const std::uint64_t &key, const std::int8_t &value);
     bool addToIntVarMap(const std::uint64_t &key, const std::int16_t &value);
@@ -313,6 +311,7 @@ public:
     }
 
 
+    void clearList();
     void clearMap();
     void clearIntVarMap();
     void clearIntegerVariantMap();
