@@ -7,7 +7,7 @@
 int main()
 {
     zyxcba::ZVariant v,v1;
-    v.addToMap(1,std::string("Smile"));
+    v.addToMap(1,"Smile");
 
 //    zyxcba::ZVariant v1;
 //    v1.addToMap(1,v);
@@ -15,8 +15,9 @@ int main()
     v1 = std::move(v);
 
     std::cout<<"V: "<<v.isValid()<<std::endl;
+    //std::cout<<"V1: "<<v1.getString()<<std::endl;
 
-    for(auto it = v1.getIntegerVariantMap() .cbegin(); it != v1.getIntegerVariantMap().cend(); ++it)
+    for(auto it = v1.getIntegerVariantMap().cbegin(); it != v1.getIntegerVariantMap().cend(); ++it)
     {
         std::cout << it->second<<std::endl;
     }

@@ -128,7 +128,21 @@ ZVariant::ZVariant(const std::string &&param):
     m_variantType(ZVariantType::String),
     m_string(std::move(param))
 {
+
+#ifdef ZYXCBA_DEBUG
     std::cout<<"Moving string..."<<std::endl;
+#endif
+
+}
+
+ZVariant::ZVariant(const char *param):
+    m_variantType(ZVariantType::String),
+    m_string(std::move(param))
+{
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"Moving Char string..."<<std::endl;
+#endif
+
 }
 
 ZVariant::ZVariant(const ZVariantList &param):
@@ -554,6 +568,11 @@ bool ZVariant::isList() const
     return this->m_variantType == ZVariantType::List;
 }
 
+bool ZVariant::isIntVarMap() const
+{
+    return this->m_variantType == ZVariantType::IntegerVariantMap;
+}
+
 bool ZVariant::isIntegerVariantMap() const
 {
     return this->m_variantType == ZVariantType::IntegerVariantMap;
@@ -579,6 +598,12 @@ std::uint64_t ZVariant::listLength() const
 std::uint64_t ZVariant::stringLength() const
 {
     if(this->isString()) return this->m_string.size();
+    return 0;
+}
+
+std::uint64_t ZVariant::intVarMapLength() const
+{
+    if(this->isIntegerVariantMap()) return this->m_integerVariantMap.size();
     return 0;
 }
 
@@ -654,31 +679,31 @@ zfloat64 ZVariant::getFloat64() const
     return this->m_float64;
 }
 
-std::uint64_t ZVariant::getNumber() const
+zfloat64 ZVariant::getNumber() const
 {
     switch (m_variantType) {
     case ZVariantType::Int8:
-        return static_cast<std::uint64_t>(this->m_int8);
+        return static_cast<zfloat64>(this->m_int8);
     case ZVariantType::Int16:
-        return static_cast<std::uint64_t>(this->m_int16);
+        return static_cast<zfloat64>(this->m_int16);
     case ZVariantType::Int32:
-        return static_cast<std::uint64_t>(this->m_int32);
+        return static_cast<zfloat64>(this->m_int32);
     case ZVariantType::Int64:
-        return static_cast<std::uint64_t>(this->m_int64);
+        return static_cast<zfloat64>(this->m_int64);
 
     case ZVariantType::UInt8:
-        return static_cast<std::uint64_t>(this->m_uint8);
+        return static_cast<zfloat64>(this->m_uint8);
     case ZVariantType::UInt16:
-        return static_cast<std::uint64_t>(this->m_uint16);
+        return static_cast<zfloat64>(this->m_uint16);
     case ZVariantType::UInt32:
-        return static_cast<std::uint64_t>(this->m_uint32);
+        return static_cast<zfloat64>(this->m_uint32);
     case ZVariantType::UInt64:
-        return static_cast<std::uint64_t>(this->m_uint64);
+        return static_cast<zfloat64>(this->m_uint64);
 
     case ZVariantType::Float32:
-        return static_cast<std::uint64_t>(this->m_float32);
+        return static_cast<zfloat64>(this->m_float32);
     case ZVariantType::Float64:
-        return static_cast<std::uint64_t>(this->m_float64);
+        return this->m_float64;
     default:
         return 0;
     }
@@ -714,6 +739,11 @@ const ZVariantList &ZVariant::getList() const
 const ZVariantMap &ZVariant::getMap() const
 {
     return this->m_map;
+}
+
+const ZIntegerVariantMap &ZVariant::getIntVarMap() const
+{
+    return this->m_integerVariantMap;
 }
 
 const ZIntegerVariantMap &ZVariant::getIntegerVariantMap() const
@@ -827,6 +857,13 @@ void ZVariant::setMap(const ZVariantMap &param)
     this->m_variantType = ZVariantType::Map;
     this->m_map.clear();
     this->m_map.insert(param.begin(),param.end());
+}
+
+void ZVariant::setIntVarMap(const ZIntegerVariantMap &param)
+{
+    this->m_variantType = ZVariantType::IntegerVariantMap;
+    this->m_integerVariantMap.clear();
+    this->m_integerVariantMap.insert(param.begin(),param.end());
 }
 
 void ZVariant::setIntegerVariantMap(const ZIntegerVariantMap &param)
@@ -1155,6 +1192,24 @@ bool ZVariant::addToMap(const std::uint64_t &key, const std::string &value)
     }
 }
 
+bool ZVariant::addToMap(const std::uint64_t &key, const char *value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::IntegerVariantMap;
+    }
+
+    if(this->m_variantType == ZVariantType::IntegerVariantMap)
+    {
+        this->m_integerVariantMap.insert(std::pair<std::uint64_t,ZVariant>(key,value));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool ZVariant::addToList(const bool &value)
 {
     if(this->m_variantType == ZVariantType::None)
@@ -1354,6 +1409,24 @@ bool ZVariant::addToList(const zfloat64 &value)
 }
 
 bool ZVariant::addToList(const std::string &value)
+{
+    if(this->m_variantType == ZVariantType::None)
+    {
+        this->m_variantType = ZVariantType::List;
+    }
+
+    if(this->m_variantType == ZVariantType::List)
+    {
+        this->m_list.emplace_back(value);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool ZVariant::addToList(const char *value)
 {
     if(this->m_variantType == ZVariantType::None)
     {

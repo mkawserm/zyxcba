@@ -46,6 +46,7 @@ namespace zyxcba {
 class ZVariant;
 typedef std::vector<ZVariant> ZVariantList;
 typedef std::map<ZVariant,ZVariant> ZVariantMap;
+typedef std::map<std::uint64_t,ZVariant> ZIntVarMap;
 typedef std::map<std::uint64_t,ZVariant> ZIntegerVariantMap;
 
 
@@ -108,6 +109,8 @@ public:
     explicit ZVariant(const std::string &param);
     explicit ZVariant(const std::string &&param);
 
+    explicit ZVariant(const char *param);
+
     explicit ZVariant(const ZVariantList &param);
     explicit ZVariant(const ZVariantMap &param);
     explicit ZVariant(const ZIntegerVariantMap &param);
@@ -145,11 +148,13 @@ public:
 
     bool isMap() const;
     bool isList() const;
+    bool isIntVarMap() const;
     bool isIntegerVariantMap() const;
 
     std::uint64_t mapLength() const;
     std::uint64_t listLength() const;
     std::uint64_t stringLength() const;
+    std::uint64_t intVarMapLength() const;
     std::uint64_t integerVariantMapLength() const;
 
     bool getBool() const;
@@ -166,13 +171,14 @@ public:
     zfloat32 getFloat32() const;
     zfloat64 getFloat64() const;
 
-    std::uint64_t getNumber() const;
+    zfloat64 getNumber() const;
     std::uint64_t getLength() const;
 
 
     const std::string &getString() const;
     const ZVariantList &getList() const;
     const ZVariantMap &getMap() const;
+    const ZIntegerVariantMap &getIntVarMap() const;
     const ZIntegerVariantMap &getIntegerVariantMap() const;
 
     void makeInvalid();
@@ -193,6 +199,7 @@ public:
     void setString(const std::string &param);
     void setList(const ZVariantList &param);
     void setMap(const ZVariantMap &param);
+    void setIntVarMap(const ZIntegerVariantMap &param);
     void setIntegerVariantMap(const ZIntegerVariantMap &param);
 
     void setValue(const bool &param);
@@ -231,6 +238,7 @@ public:
     bool addToList(const zfloat32 &value);
     bool addToList(const zfloat64 &value);
     bool addToList(const std::string &value);
+    bool addToList(const char *value);
 
     bool addToList(const ZVariant &value);
 
@@ -248,6 +256,7 @@ public:
     bool addToMap(const std::uint64_t &key, const zfloat32 &value);
     bool addToMap(const std::uint64_t &key, const zfloat64 &value);
     bool addToMap(const std::uint64_t &key, const std::string &value);
+    bool addToMap(const std::uint64_t &key, const char *value);
     bool addToMap(const std::uint64_t &key, const ZVariant &value);
 
     bool addToMap(const ZVariant &key, const ZVariant &value);
