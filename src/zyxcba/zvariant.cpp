@@ -1463,7 +1463,10 @@ ZVariant &ZVariant::operator=(ZVariant &&rhs)
 
 ZVariant &ZVariant::operator=(const ZVariant &rhs)
 {
-    std::cout<<"Copying = ..."<<std::endl;
+#ifdef ZYXCBA_DEBUG
+    std::cout<<"Assignment Copying = ..."<<std::endl;
+#endif
+
     this->m_variantType = rhs.m_variantType;
     switch (m_variantType) {
     case ZVariantType::Bool:
